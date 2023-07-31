@@ -110,7 +110,7 @@ const SignupForm = () => {
              userFormData.password)}
           type='submit'
           variant='success'>
-          Submit
+          Sign Up
         </Button>
       </Form>
     </>
