@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect,useState } from 'react';
 import { Form, Button, Alert } from 'react-bootstrap';
 
 import { ADD_USER } from '../utils/mutations';
@@ -8,12 +8,23 @@ import Auth from '../utils/auth';
 
 const SignupForm = () => {
   // set initial form state
-  const [userFormData, setUserFormData] = useState({ username: '', email: '', password: '' });
+  const [userFormData, setUserFormData] = useState({ 
+    username: '',
+   email: '',
+    password: '' });
   // set state for form validation
   const [validated] = useState(false);
   // set state for alert
   const [showAlert, setShowAlert] = useState(false);
   const [addUser, { error, data }] = useMutation(ADD_USER);
+
+  useEffect(() => {
+    if (error) {
+      setShowAlert(true);
+    } else {
+      setShowAlert(false);
+    }
+  }, [error]);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -31,16 +42,12 @@ const SignupForm = () => {
     }
 
     try {
-      const response = await addUser({ variables: { ...userFormData } });
+      const {data} = await addUser({ variables: { ...userFormData }, });
+      Auth.login(data.addUser.token);
     
-      if (response.data.addUser.token) {
-        Auth.login(response.data.addUser.token);
-      } else {
-        throw new Error('something went wrong!');
-      }
     } catch (err) {
       console.error(err);
-      setShowAlert(true);
+      // setShowAlert(true);
     }
     
     setUserFormData({
@@ -98,7 +105,9 @@ const SignupForm = () => {
           <Form.Control.Feedback type='invalid'>Password is required!</Form.Control.Feedback>
         </Form.Group>
         <Button
-          disabled={!(userFormData.username && userFormData.email && userFormData.password)}
+          disabled={!(userFormData.username &&
+             userFormData.email && 
+             userFormData.password)}
           type='submit'
           variant='success'>
           Submit
