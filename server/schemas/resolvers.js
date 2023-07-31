@@ -1,14 +1,18 @@
 const { User } = require("../models");
 const {signToken }= require("../utils/auth");
 const { AuthenticationError } = require('apollo-server-express');
+
 const resolvers = {
   Query: {
-    User: async () => {
-      return await User.find();
+    me: async (parent, args, context) => {
+      if (context.user) {
+        const userData = await User.findOne({ _id: context.user._id }).select('-__v -password');
+
+        return userData;
+      }
+
+      throw new AuthenticationError('Not logged in');
     },
-    user: async (parent, { username }) => {
-      return User.findOne({ username });
-    }
   },
   Mutation: {
     addUser: async (parent, { username, email, password }) => {
@@ -37,14 +41,32 @@ const resolvers = {
       // Return an `Auth` object that consists of the signed token and user's information
       return { token, user };
     },
-    saveBook:
-      async (parent, {savedBooks}) => {
-        // Look up the user by the provided email address. Since the `email` field is unique, we know that only one person will exist with that email
-        const user = await User.findOne({ savedBooks });
-        const token = signToken(user);
-        // Return an `Auth` object that consists of the signed token and user's information
-        return { token, user };
+    
+    saveBook: async (parent, { bookData }, context) => {
+      if (context.user) {
+        const updatedUser = await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $push: { savedBooks: bookData } },
+          { new: true }
+        );
+        return updatedUser;
+      }
+      throw new AuthenticationError('You need to be logged in!');
+  },
+  removeBook: async (parent, { bookId }, context) => {
+    if (context.user) {
+      const updatedUser = await User.findOneAndUpdate(
+        { _id: context.user._id },
+        { $pull: { savedBooks: { bookId } } },
+        { new: true }
+      );
+
+      return updatedUser;
     }
-  }
- }
+
+    throw new AuthenticationError('You need to be logged in!');
+  },
+},
+};
+
 module.exports = resolvers;
