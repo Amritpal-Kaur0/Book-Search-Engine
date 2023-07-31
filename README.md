@@ -1,32 +1,6 @@
-# 21 MERN: Book Search Engine
+#  Book Search Engine
 
-## Your Task
-
-Your assignment this week is emblematic of the fact that most modern websites are driven by two things: data and user demands. This shouldn't come as a surprise, as the ability to personalize user data is the cornerstone of real-world web development today. And as user demands evolve, applications need to be more performant.
-
-This week, you’ll take starter code with a fully functioning Google Books API search engine built with a RESTful API, and refactor it to be a GraphQL API built with Apollo Server. The app was built using the MERN stack with a React front end, MongoDB database, and Node.js/Express.js server and API. It's already set up to allow users to save book searches to the back end. 
-
-To complete the assignment, you’ll need to do the following:
-
-1. Set up an Apollo Server to use GraphQL queries and mutations to fetch and modify data, replacing the existing RESTful API.
-
-2. Modify the existing authentication middleware so that it works in the context of a GraphQL API.
-
-3. Create an Apollo Provider so that requests can communicate with an Apollo Server.
-
-4. Deploy your application to Heroku with a MongoDB database using MongoDB Atlas. Use the [Deploy with Heroku and MongoDB Atlas](https://coding-boot-camp.github.io/full-stack/mongodb/deploy-with-heroku-and-mongodb-atlas) walkthrough for instructions.
-
-
-## User Story
-
-```md
-AS AN avid reader
-I WANT to search for new books to read
-SO THAT I can keep a list of books to purchase
-```
-
-
-## Acceptance Criteria
+## Description
 
 ```md
 GIVEN a book search engine
@@ -60,4 +34,17 @@ WHEN I click on the Logout button
 THEN I am logged out of the site and presented with a menu with the options Search for Books and Login/Signup and an input field to search for books and a submit button  
 ```
 
+## License 
+This project is licensed under the MIT license. For more information about the license, go to [License](https://choosealicense.com/licenses/mit/).
+
+## Contribution
+If you wish to contribute to this project, feel free to submit a pull request. All contributions are welcome!
+
+Fork the repository. Create a new branch: git checkout -b feature/your-feature. Make your changes and commit them: git commit -m 'Add some feature'. Push to the branch: git push origin feature/your-feature. Submit a pull request.
+
+ ## Questions
+ If you have encounter any issues or have any Questions Regarding this Project. Connect with me at
+
+- Email -Amrit.gill3005@gmail.com 
+- Github - [Amritpal-Kaur0](https://github.com/Amritpal-Kaur0) 
 
